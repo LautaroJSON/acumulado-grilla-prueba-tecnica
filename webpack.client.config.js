@@ -2,13 +2,14 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.tsx",
+  entry: [
+    "webpack-hot-middleware/client?reload=true", // Habilita el hot reload
+    "./src/client/index.tsx",
+  ],
+  mode: "development",
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
-  },
-  resolve: {
-    extensions: [".js", ".ts", ".tsx"],
+    path: path.resolve(__dirname, "dist/public"),
+    filename: "bundle.client.js",
   },
   module: {
     rules: [
@@ -17,10 +18,6 @@ module.exports = {
         use: "ts-loader",
         exclude: /node_modules/,
       },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
-      },
     ],
   },
   plugins: [
@@ -28,10 +25,7 @@ module.exports = {
       template: "./public/index.html",
     }),
   ],
-  devServer: {
-    static: path.resolve(__dirname, "dist"),
-    compress: true,
-    port: 3000,
+  resolve: {
+    extensions: [".js", ".jsx", ".tsx"],
   },
-  mode: "development",
 };
