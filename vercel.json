@@ -1,7 +1,7 @@
 {
     "builds": [
         {
-            "src": "dist/server.bundle.cjs",
+            "src": "src/server/server.tsx",
             "use": "@vercel/node"
         }
     ],
