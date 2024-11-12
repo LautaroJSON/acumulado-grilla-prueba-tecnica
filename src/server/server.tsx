@@ -1,38 +1,70 @@
 import express from "express";
-import React from "react";
-import ReactDOMServer from "react-dom/server";
-import App from "../client/App";
-import fs from "fs";
 import path from "path";
-import getArticles from "./services";
-import { ArticlesProvider } from "../client/context/articlesContext";
-import dotenv from "dotenv";
+import fs from "fs";
+import ReactDOMServer from "react-dom/server";
 
-const app = express();
+import App from "../client/App";
+import getArticles from "./services";
+import { filterArticlesBySubtype, getGroupsByTag } from "./utils";
+import { ArticlesProvider } from "../client/context/articlesContext";
+
+import dotenv from "dotenv";
 dotenv.config();
 
-app.use(express.static(path.resolve(__dirname, "dist")));
+const PORT = process.env.PORT;
 
-app.get("*", async (req, res) => {
+const getInitialData = async () => {
   const initialData = await getArticles();
+  const filterData = filterArticlesBySubtype(initialData || []);
+  const tagsBreadcrumbs = getGroupsByTag(filterData);
 
-  const appString = ReactDOMServer.renderToString(
-    <ArticlesProvider initialData={initialData}>
+  return { filterData, tagsBreadcrumbs };
+};
+
+const reactToHTML = async () => {
+  const initialData = await getInitialData();
+
+  const reactApp = ReactDOMServer.renderToString(
+    <ArticlesProvider
+      initialData={{
+        articles: initialData.filterData,
+        breadcrumbs: initialData.tagsBreadcrumbs,
+      }}
+    >
       <App />
     </ArticlesProvider>
   );
 
-  fs.readFile(path.resolve(__dirname, "public/index.html"), "utf-8", (err, data) => {
-    if (err) {
-      return res.status(500).send("error");
-    }
+  const html = await fs.promises.readFile(path.resolve(__dirname, "index.html"), "utf-8");
+  const cssString = await fs.promises.readFile(
+    path.resolve(__dirname, "server.css"),
+    "utf8"
+  );
 
-    return res.send(
-      data.replace('<div id="root"></div>', `<div id="root">${appString}</div>`)
+  const reactHtml = html
+    .replace('<div id="root"></div>', `<div id="root">${reactApp}</div>`)
+    .replace("</title>", `</title> <style>${cssString}</style>`)
+    .replace(
+      "</body>",
+      `<script>window.__INITIAL_DATA__ = ${JSON.stringify({
+        articles: initialData.filterData,
+        breadcrumbs: initialData.tagsBreadcrumbs,
+      })};</script></body>`
     );
-  });
+
+  return reactHtml;
+};
+
+const app = express();
+
+app.use("/static", express.static(path.join(__dirname)));
+
+// Luego, manejamos la ruta de la app
+app.get("*", async (_, res) => {
+  const indexHtml = await reactToHTML();
+  res.status(200).send(indexHtml);
 });
 
-app.listen(3000, () => {
-  console.log("SSR app running on http://localhost:3000");
+app.listen(PORT, () => {
+  console.log(`SSR app running on http://localhost:${PORT}`);
 });

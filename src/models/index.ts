@@ -36,7 +36,7 @@ interface ITaxonomy {
   tags: ITag[];
 }
 
-interface ITag {
+export interface ITag {
   slug: string;
   text: string;
 }

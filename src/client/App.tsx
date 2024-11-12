@@ -1,13 +1,36 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { ArticlesContext } from "./context/articlesContext";
+import { ArticleGrid, Row, TagList, Title } from "./components";
+
+import Layout from "./layout";
+import "./globals.css";
+import Button from "./components/Button";
 
 function App() {
-  const { ArticlesList } = useContext(ArticlesContext);
-  console.log(ArticlesList);
+  const { articlesList, visibleArticles, breadcrumbs, loadMoreArticles, resetArticles } =
+    useContext(ArticlesContext);
+
   return (
-    <div>
-      {ArticlesList ? ArticlesList.map((a) => <h1>{a.headlines.basic}</h1>) : "Lol"}
-    </div>
+    <main>
+      <Layout>
+        <>
+          <Row>
+            <Title>Acumulado Grilla</Title>
+          </Row>
+          <Row>
+            <TagList tags={breadcrumbs} />
+          </Row>
+          <ArticleGrid articles={articlesList} />
+          <Row>
+            {visibleArticles > articlesList!.length ? (
+              <Button label="MOSTRAR MENOS" onClick={resetArticles} />
+            ) : (
+              <Button label="MÁS NOTAS DE ACUMULADO GRILLA" onClick={loadMoreArticles} />
+            )}
+          </Row>
+        </>
+      </Layout>
+    </main>
   );
 }
 
