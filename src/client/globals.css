@@ -183,54 +183,6 @@ main {
 /* COLUMNAS */
 /* ORDERS */
 /* OFFSETS */
-/* FONTS --------------- */
-@font-face {
-  font-family: "SuecaSlab";
-  src: url("../fonts/suecaslab-medium-webfont.eot");
-  src:
-    url("../fonts/suecaslab-medium-webfont.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/suecaslab-medium-webfont.woff") format("woff"),
-    url("../fonts/suecaslab-medium-webfont.ttf") format("truetype"),
-    url("../fonts/suecaslab-medium-webfont.svg?#webfont") format("svg");
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "SuecaSlab";
-  src: url("../fonts/suecaslab-bold-webfont.eot");
-  src:
-    url("../fonts/suecaslab-bold-webfont.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/suecaslab-bold-webfont.woff") format("woff"),
-    url("../fonts/suecaslab-bold-webfont.ttf") format("truetype"),
-    url("../fonts/suecaslab-bold-webfont.svg?#webfont") format("svg");
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "LNicons";
-  src: url("../fonts/ln-icons.eot");
-  src:
-    url("../fonts/ln-icons.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/ln-icons.woff") format("woff"),
-    url("../fonts/ln-icons.ttf") format("truetype"),
-    url("../fonts/ln-icons.svg?#webfont") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "LNlogos";
-  src: url("../fonts/ln-logos.eot");
-  src:
-    url("../fonts/ln-logos.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/ln-logos.woff") format("woff"),
-    url("../fonts/ln-logos.ttf") format("truetype"),
-    url("../fonts/ln-logos.svg?#webfont") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
 
 strong {
   font-weight: 700;
@@ -4692,7 +4644,6 @@ button:hover {
   border: 0;
   display: inline-block;
   width: auto;
-  float: initial;
   position: relative;
   vertical-align: bottom;
 }
@@ -5375,8 +5326,7 @@ footer .footer-sitio .footer-sitio__captcha p {
   color: #5a5a5a;
   font-size: 0.875em;
   line-height: 1.25em;
-  /*height: fit-content;
-                width: fit-content;*/
+
   text-align: right;
   width: 100%;
 }
@@ -5400,50 +5350,11 @@ footer .footer-copyright {
   margin-bottom: 1.25em;
 }
 
-footer .footer-copyright .footer-copyright__fiscal {
-  /*.fiscal_row {
-                width: 100%;
-                @media (min-width: 1024px) {
-                    display: flex;
-                    justify-content: flex-end;
-                }
-                .logo-gda {
-                    display: flex;
-                    flex-direction: row-reverse;
-                    @media (max-width: 1023px) {
-                        align-items: center;
-                    }
-                    @media (min-width: 1024px) {
-                        margin-top: -10px;
-                    }
-                }
-                .gda {
-                    font-family: Arial, "sans-serif";
-                    font-size: $font-14;
-                    line-height: $px-20;
-                    display: flex;
-                    justify-content: center;
-                    @media (max-width: 1023px) {
-                        align-items: center;
-                    }
-                    .img_gda {
-                        height: $px-15;
-                    }
-                }
-                .data-fiscal {
-                    .img_data-fiscal {
-                        width: $px-35;
-                    }
-                }
-            }*/
-}
-
 footer .footer-copyright .footer-copyright__fiscal p {
   color: #5a5a5a;
   font-size: 0.875em;
   line-height: 1.25em;
-  /*height: fit-content;
-                width: fit-content;*/
+
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -6290,13 +6201,6 @@ input[type="text"]:focus::placeholder {
   line-height: 1.4375rem;
 }
 
-.mod-newsletter .col-12:nth-child(2) {
-  background-image: url("/arc-css/img/newsletter-lineas-trama-der.svg");
-  background-position: right top;
-  background-size: 40%;
-  background-repeat: no-repeat;
-}
-
 .mod-newsletter .col-12:nth-child(3) {
   padding-top: 0;
 }
@@ -6343,24 +6247,11 @@ input[type="text"]:focus::placeholder {
   font-size: 0.75em;
 }
 
-.mod-newsletter.error .com-input {
-  border: 1px solid #9d2827;
-  background-image: url("/arc-css/img/x.svg");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-}
-
 .mod-newsletter.error .com-input:after {
   content: "\e912";
   font-family: "LNicons" !important;
   font-size: 0.875em;
   color: #9d2827;
-}
-
-.mod-newsletter p.check {
-  background-image: url("/arc-css/img/check.svg");
-  background-repeat: no-repeat;
-  text-indent: 30px;
 }
 
 .mod-newsletter label.check {
@@ -6412,14 +6303,6 @@ input[type="text"]:focus::placeholder {
   .mod-newsletter .col-tablet-2 {
     background-repeat: no-repeat;
     background-size: 100%;
-  }
-  .mod-newsletter .col-tablet-2:first-child {
-    background-image: url("/arc-css/img/newsletter-lineas-trama-izq.svg");
-    background-position: left bottom;
-  }
-  .mod-newsletter .col-tablet-2:last-child {
-    background-image: url("/arc-css/img/newsletter-lineas-trama-der.svg");
-    background-position: right top;
   }
 }
 
@@ -6880,4 +6763,3 @@ article a.figure:before {
 .rolling .mod-newsletter {
   background-color: #b40d15;
 }
-/*# sourceMappingURL=site.css.map */
