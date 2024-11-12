@@ -34,7 +34,7 @@ const resolve = {
 
 const serverConfig = {
   target: "node",
-  mode: "development",
+  mode: "production",
   entry: "./src/server/server.tsx",
   output: {
     path: path.join(__dirname, "/dist"),
@@ -52,7 +52,7 @@ const serverConfig = {
 
 const clientConfig = {
   target: "web",
-  mode: "development",
+  mode: "production",
   entry: "./src/client/index.tsx",
   output: {
     path: path.join(__dirname, "/dist"),
