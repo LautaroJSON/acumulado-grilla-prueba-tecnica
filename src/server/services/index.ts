@@ -1,4 +1,4 @@
-import { IArticle } from "../../models";
+import { IArticle } from "../models";
 import fetch from "node-fetch";
 
 const apiUrl = process.env.API_URL;

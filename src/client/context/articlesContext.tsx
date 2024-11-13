@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { IArticle } from "../../models";
+import { IArticle } from "../models";
 
 interface IArticlesContext {
   articlesList: Array<IArticle> | null;

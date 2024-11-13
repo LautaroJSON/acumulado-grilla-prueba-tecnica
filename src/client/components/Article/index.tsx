@@ -1,4 +1,4 @@
-import { IArticle } from "../../../models";
+import { IArticle } from "../../models";
 import { formatDate } from "../../utils";
 
 interface IArticleComponent {

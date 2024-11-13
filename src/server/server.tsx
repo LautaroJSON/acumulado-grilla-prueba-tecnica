@@ -59,7 +59,6 @@ const app = express();
 
 app.use("/static", express.static(path.join(__dirname)));
 
-// Luego, manejamos la ruta de la app
 app.get("*", async (_, res) => {
   const indexHtml = await reactToHTML();
   res.status(200).send(indexHtml);

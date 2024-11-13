@@ -1,4 +1,4 @@
-import { IArticle, ITag } from "../../models";
+import { IArticle, ITag } from "../models";
 
 function filterArticlesBySubtype(
   articles: Array<IArticle>,

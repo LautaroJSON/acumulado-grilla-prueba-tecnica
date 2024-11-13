@@ -1,5 +1,5 @@
 import { useCallback, useContext, useState } from "react";
-import { IArticle } from "../../../models";
+import { IArticle } from "../../models";
 import { Article } from "../Article";
 import { ArticlesContext } from "../../context/articlesContext";
 
