@@ -44,7 +44,7 @@ const serverConfig = {
   plugins: [
     new Dotenv(),
     new MiniCssExtractPlugin({
-      filename: "server.css", // Generar un archivo CSS separado
+      filename: "server.css",
     }),
   ],
   resolve,

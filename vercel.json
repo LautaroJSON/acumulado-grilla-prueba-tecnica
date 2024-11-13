@@ -1,10 +1,5 @@
 {
-    "builds": [
-        {
-            "src": "dist/server.bundle.cjs",
-            "use": "@vercel/node"
-        }
-    ],
+    "version": 2,
     "routes": [
         {
             "src": "/(.*)",
