@@ -6,12 +6,10 @@ interface IArticlesContext {
   visibleArticles: number;
   loadMoreArticles: () => void;
   resetArticles: () => void;
-  breadcrumbs:
-    | {
-        slug: string;
-        text: string;
-      }[]
-    | null;
+  breadcrumbs: Array<{
+    slug: string;
+    text: string;
+  }> | null;
 }
 
 type ArticlesProviderType = {
@@ -35,9 +33,9 @@ export const ArticlesContext = createContext<IArticlesContext>({
 
 export const ArticlesProvider = ({ children, initialData }: ArticlesProviderType) => {
   const [articlesList] = useState<Array<IArticle> | null>(initialData.articles || null);
-  const [breadcrumbs] = useState<Array<{ slug: string; text: string }> | null>(
-    initialData.breadcrumbs || null
-  );
+  const [breadcrumbs] = useState<
+    ArticlesProviderType["initialData"]["breadcrumbs"] | null
+  >(initialData.breadcrumbs || null);
 
   const [visibleArticles, setVisibleArticles] = useState<number>(8);
 

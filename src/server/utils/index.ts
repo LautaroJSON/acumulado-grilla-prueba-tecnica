@@ -8,7 +8,7 @@ function filterArticlesBySubtype(
   return articles.filter((article) => article.subtype === subtype);
 }
 
-function getGroupsByTag(articles: IArticle[], topTags: number = 10): Array<ITag> {
+function getGroupsByTag(articles: Array<IArticle>, topTags: number = 10): Array<ITag> {
   if (!articles) return [];
 
   const tagCounts: Record<string, { tag: ITag; count: number }> = {};

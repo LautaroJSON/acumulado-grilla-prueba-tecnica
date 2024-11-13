@@ -6,6 +6,14 @@ import Layout from "./layout";
 import "./globals.css";
 import Button from "./components/Button";
 
+const TEXT = {
+  title: "Acumulado Grilla",
+  button: {
+    moreInfoLabel: "MÁS NOTAS DE ACUMULADO GRILLA",
+    lessInfoLabel: "MOSTRAR MENOS",
+  },
+};
+
 function App() {
   const { articlesList, visibleArticles, breadcrumbs, loadMoreArticles, resetArticles } =
     useContext(ArticlesContext);
@@ -15,7 +23,7 @@ function App() {
       <Layout>
         <>
           <Row>
-            <Title>Acumulado Grilla</Title>
+            <Title>{TEXT.title}</Title>
           </Row>
           <Row>
             <TagList tags={breadcrumbs} />
@@ -23,9 +31,9 @@ function App() {
           <ArticleGrid articles={articlesList} />
           <Row>
             {visibleArticles > articlesList!.length ? (
-              <Button label="MOSTRAR MENOS" onClick={resetArticles} />
+              <Button label={TEXT.button.lessInfoLabel} onClick={resetArticles} />
             ) : (
-              <Button label="MÁS NOTAS DE ACUMULADO GRILLA" onClick={loadMoreArticles} />
+              <Button label={TEXT.button.moreInfoLabel} onClick={loadMoreArticles} />
             )}
           </Row>
         </>

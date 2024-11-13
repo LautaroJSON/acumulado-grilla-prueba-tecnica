@@ -14,7 +14,9 @@ export const Article = ({ articleParam }: IArticleComponent) => {
       <section className="cont-figure">
         <a href="" className="figure">
           <picture className="content-pic picture">
-            {/* {promo_items?.basic?.resized_urls?.map((item, index) => (
+            {/* 
+            Las resized_urls tiene las url rotas, en caso de que funcionen: 
+            {promo_items?.basic?.resized_urls?.map((item, index) => (
               <source key={index} srcSet={item.resizedUrl} media={item.option.media} />
             ))} */}
             <img
