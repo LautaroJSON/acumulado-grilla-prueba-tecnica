@@ -36,14 +36,9 @@ const reactToHTML = async () => {
   );
 
   const html = await fs.promises.readFile(path.resolve(__dirname, "index.html"), "utf-8");
-  const cssString = await fs.promises.readFile(
-    path.resolve(__dirname, "server.css"),
-    "utf8"
-  );
 
   const reactHtml = html
     .replace('<div id="root"></div>', `<div id="root">${reactApp}</div>`)
-    .replace("</title>", `</title> <style>${cssString}</style>`)
     .replace(
       "</body>",
       `<script>window.__INITIAL_DATA__ = ${JSON.stringify({

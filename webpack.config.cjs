@@ -1,10 +1,10 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-const webpack = require("webpack");
 
-const babelLoader = {
+const babelLoaderClient = {
   rules: [
     {
       test: /\.tsx?$/,
@@ -28,6 +28,30 @@ const babelLoader = {
   ],
 };
 
+const babelLoaderServer = {
+  rules: [
+    {
+      test: /\.tsx?$/,
+      exclude: /node_modules/,
+      use: {
+        loader: "babel-loader",
+        options: {
+          presets: [
+            "@babel/preset-env",
+            ["@babel/preset-react", { runtime: "automatic" }],
+            "@babel/preset-typescript",
+          ],
+        },
+      },
+    },
+    {
+      test: /\.css$/,
+      exclude: /node_modules/,
+      use: ["css-loader"],
+    },
+  ],
+};
+
 const resolve = {
   extensions: [".tsx", ".ts", ".js"],
 };
@@ -40,13 +64,8 @@ const serverConfig = {
     path: path.join(__dirname, "/dist"),
     filename: "server.bundle.cjs",
   },
-  module: babelLoader,
-  plugins: [
-    new Dotenv(),
-    new MiniCssExtractPlugin({
-      filename: "server.css",
-    }),
-  ],
+  module: babelLoaderServer,
+  plugins: [new Dotenv()],
   resolve,
 };
 
@@ -59,15 +78,18 @@ const clientConfig = {
     filename: "client.bundle.js",
     publicPath: "/static",
   },
-  module: babelLoader,
+  module: babelLoaderClient,
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/client/index.html",
     }),
     new MiniCssExtractPlugin({
-      filename: "client.css",
+      filename: "styles.css",
     }),
   ],
+  optimization: {
+    minimizer: [`...`, new CssMinimizerPlugin()],
+  },
   resolve,
 };
 
