@@ -1,8 +1,15 @@
 const path = require("path");
+// const glob = require("glob");
+// const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+
+const PATHS = {
+  dist: path.join(__dirname, "/dist"),
+  src: path.join(__dirname, "/src"),
+};
 
 const babelLoaderClient = {
   rules: [
@@ -61,7 +68,7 @@ const serverConfig = {
   mode: "production",
   entry: "./src/server/server.tsx",
   output: {
-    path: path.join(__dirname, "/dist"),
+    path: PATHS.dist,
     filename: "server.bundle.cjs",
   },
   module: babelLoaderServer,
@@ -74,12 +81,17 @@ const clientConfig = {
   mode: "production",
   entry: "./src/client/index.tsx",
   output: {
-    path: path.join(__dirname, "/dist"),
+    path: PATHS.dist,
     filename: "client.bundle.js",
     publicPath: "/static",
   },
   module: babelLoaderClient,
   plugins: [
+    // new PurgeCSSPlugin({
+    //   paths: glob.sync(`${PATHS.src}/**/*.{js,jsx,ts,tsx,html}`, { nodir: true }),
+    //   safelist: ['[class*=" lay"]', "[class^=lay]", /@media/, /^lay-/],
+    //   whitelistPatterns: [/lay-.*/],
+    // }),
     new HtmlWebpackPlugin({
       template: "./src/client/index.html",
     }),
