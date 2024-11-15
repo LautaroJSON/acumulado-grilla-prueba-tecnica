@@ -6,26 +6,44 @@ Aplicación React Server-Side Rendered (SSR) creada como prueba técnica para el
 
 ## Instalacion
 
-Crear una copia del repositorio con git
+1. Clonar el repositorio
 
 ```bash
   git clone https://github.com/LautaroJSON/acumulado-grilla-prueba-tecnica.git
-  cd my-project
+  cd acumulado-grilla-prueba-tecnica
 ```
 
-Una vez tengamos el repositorio descargamos las dependencias
+2. Una vez tengamos el repositorio, descargamos las dependencias
 
 ```bash
   yarn install // npm install
 ```
 
-Por ultimo utilizaremos los comandos del _package.json_
+3. Por ultimo levantamos el proyecto con:
 
 ```bash
   yarn run start // npm run start
 ```
 
 _**nota**: IMPORANTE! recordar crear el archivo ".env" con las variables de entorno de ".env.example"_
+
+---
+
+#### Docker:
+
+Si desea iniciar el proyecto con docker
+
+1. Creamos la imagen
+
+```bash
+  docker build -t acumulado:1 .
+```
+
+2. levantamos la imagen en los puertos 3001:3001
+
+```bash
+  docker run -p 3001:3001 acumulado:1
+```
 
 ## Caracteristicas
 
