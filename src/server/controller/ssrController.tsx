@@ -21,22 +21,22 @@ const reactToHTML = async () => {
     </ArticlesProvider>
   );
 
-  return reactApp;
+  return { reactApp, initialData };
 };
 
 export const renderSSR = async (_: Request, res: Response) => {
   console.log("entre al render");
-  const reactHtml = await reactToHTML();
-  const html = await fs.promises.readFile(
-    path.resolve(__dirname, "../src/client/index.html"),
-    "utf-8"
-  );
+  const { reactApp, initialData } = await reactToHTML();
+  const html = await fs.promises.readFile(path.resolve(__dirname, "index.html"), "utf-8");
 
   const finalHtml = html
-    .replace('<div id="root"></div>', `<div id="root">${reactHtml}</div>`)
+    .replace('<div id="root"></div>', `<div id="root">${reactApp}</div>`)
     .replace(
       "</body>",
-      `<script>window.__INITIAL_DATA__ = ${JSON.stringify(await getInitialData())};</script></body>`
+      `<script>window.__INITIAL_DATA__ = ${JSON.stringify({
+        articles: initialData.normalizeData,
+        breadcrumbs: initialData.tagsBreadcrumbs,
+      })};</script></body>`
     );
 
   console.log("voy a retornar");

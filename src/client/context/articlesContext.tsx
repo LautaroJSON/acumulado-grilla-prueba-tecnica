@@ -1,8 +1,8 @@
 import React, { createContext, useState } from "react";
-import { IArticle } from "../models";
+import { INormalizeArticle } from "../models";
 
 interface IArticlesContext {
-  articlesList: Array<IArticle> | null;
+  articlesList: Array<INormalizeArticle> | null;
   visibleArticles: number;
   loadMoreArticles: () => void;
   resetArticles: () => void;
@@ -15,7 +15,7 @@ interface IArticlesContext {
 type ArticlesProviderType = {
   children: React.ReactNode;
   initialData: {
-    articles: Array<IArticle> | null;
+    articles: Array<INormalizeArticle> | null;
     breadcrumbs: Array<{
       slug: string;
       text: string;
@@ -32,7 +32,9 @@ export const ArticlesContext = createContext<IArticlesContext>({
 });
 
 export const ArticlesProvider = ({ children, initialData }: ArticlesProviderType) => {
-  const [articlesList] = useState<Array<IArticle> | null>(initialData.articles || null);
+  const [articlesList] = useState<Array<INormalizeArticle> | null>(
+    initialData.articles || null
+  );
   const [breadcrumbs] = useState<
     ArticlesProviderType["initialData"]["breadcrumbs"] | null
   >(initialData.breadcrumbs || null);

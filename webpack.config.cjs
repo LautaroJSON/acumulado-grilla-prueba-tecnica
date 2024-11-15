@@ -66,7 +66,7 @@ const resolve = {
 const serverConfig = {
   target: "node",
   mode: "production",
-  entry: "./src/server/server.tsx",
+  entry: "./src/server/server.ts",
   output: {
     path: PATHS.dist,
     filename: "server.bundle.cjs",
