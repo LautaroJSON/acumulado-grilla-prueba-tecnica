@@ -1,10 +1,10 @@
 import { useCallback, useContext, useState } from "react";
-import { IArticle } from "../../models";
+import { INormalizeArticle } from "../../models";
 import { Article } from "../Article";
 import { ArticlesContext } from "../../context/articlesContext";
 
 interface IArticleGrid {
-  articles: Array<IArticle> | null;
+  articles: Array<INormalizeArticle> | null;
 }
 
 export const ArticleGrid = ({ articles }: IArticleGrid) => {
@@ -16,7 +16,7 @@ export const ArticleGrid = ({ articles }: IArticleGrid) => {
   return (
     <section className="row-gap-tablet-2 row-gap-deskxl-3 hlp-degrade">
       {articlesToDisplay.map((a) => (
-        <Article articleParam={a} key={a._id}></Article>
+        <Article articleParam={a} key={a.id}></Article>
       ))}
     </section>
   );

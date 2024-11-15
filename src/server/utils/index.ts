@@ -1,5 +1,4 @@
-import { IArticle, ITag } from "../models";
-import fetch from "node-fetch";
+import { IArticle, INormalizeArticle, ITag } from "../models";
 
 function filterArticlesBySubtype(
   articles: Array<IArticle>,
@@ -30,38 +29,71 @@ function getGroupsByTag(articles: Array<IArticle>, topTags: number = 10): Array<
   return finalTags;
 }
 
-function extractImageUrls(articles: IArticle[]): string[] {
-  let imageUrls: string[] = [];
+function formatDate(dateParam: string): string {
+  const date = new Date(dateParam);
+  const day = date.getDate();
+  const month = date.toLocaleString("default", { month: "long" });
+  const year = date.getFullYear();
 
-  articles.forEach((article) => {
-    if (article.promo_items?.basic?.url) {
-      imageUrls.push(article.promo_items.basic.url);
-    }
-  });
-
-  return imageUrls;
+  return `${day} de ${month} de ${year}`;
 }
 
-async function downloadImages(imageUrls: string[]): Promise<Buffer[]> {
-  try {
-    const downloadPromises = imageUrls.map((url) =>
-      fetch(url)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Error al descargar la imagen de ${url}`);
-          }
-          return response.buffer();
-        })
-        .then((buffer) => buffer)
-    );
+function normalizeArticle(article: IArticle): INormalizeArticle {
+  const defaultArticle: INormalizeArticle = {
+    id: "",
+    imageUrl: "",
+    title: "Sin titulo",
+    subtitle: "Sin subtitulo",
+    date: "Sin fecha",
+    websiteUrl: "",
+  };
 
-    const imageBuffers = await Promise.all(downloadPromises);
-
-    return imageBuffers;
-  } catch (error) {
-    console.error("Error al descargar las imágenes:", error);
-    return [];
-  }
+  return {
+    id: article._id ?? defaultArticle.id,
+    imageUrl: article.promo_items?.basic.url ?? defaultArticle.imageUrl,
+    title: article.headlines.basic ?? defaultArticle.title,
+    subtitle: article.promo_items?.basic.subtitle ?? defaultArticle.subtitle,
+    date: formatDate(article.display_date) ?? defaultArticle.date,
+    websiteUrl: article.website_url ?? defaultArticle.websiteUrl,
+  };
 }
 
-export { filterArticlesBySubtype, getGroupsByTag, downloadImages };
+function normalizeArticlesToFront(articles: IArticle[]) {
+  return articles.map(normalizeArticle);
+}
+
+// function extractImageUrls(articles: IArticle[]): string[] {
+//   let imageUrls: string[] = [];
+
+//   articles.forEach((article) => {
+//     if (article.promo_items?.basic?.url) {
+//       imageUrls.push(article.promo_items.basic.url);
+//     }
+//   });
+
+//   return imageUrls;
+// }
+
+// async function downloadImages(imageUrls: string[]): Promise<Buffer[]> {
+//   try {
+//     const downloadPromises = imageUrls.map((url) =>
+//       fetch(url)
+//         .then((response) => {
+//           if (!response.ok) {
+//             throw new Error(`Error al descargar la imagen de ${url}`);
+//           }
+//           return response.buffer();
+//         })
+//         .then((buffer) => buffer)
+//     );
+
+//     const imageBuffers = await Promise.all(downloadPromises);
+
+//     return imageBuffers;
+//   } catch (error) {
+//     console.error("Error al descargar las imágenes:", error);
+//     return [];
+//   }
+// }
+
+export { filterArticlesBySubtype, getGroupsByTag, formatDate, normalizeArticlesToFront };

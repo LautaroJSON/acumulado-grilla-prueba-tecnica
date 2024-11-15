@@ -1,18 +1,14 @@
-import { IArticle } from "../../models";
-import { formatDate } from "../../utils";
+import { INormalizeArticle } from "../../models";
 
 interface IArticleComponent {
-  articleParam: IArticle;
+  articleParam: INormalizeArticle;
 }
 
 export const Article = ({ articleParam }: IArticleComponent) => {
-  const { promo_items } = articleParam;
-  const defaultUrl = articleParam.promo_items?.basic.url;
-
   return (
     <article className="mod-caja-nota lugares w-100-mobile">
       <section className="cont-figure">
-        <a href="" className="figure">
+        <a href={articleParam.websiteUrl} className="figure">
           <picture className="content-pic picture">
             {/* 
             Las resized_urls tiene las url rotas, en caso de que funcionen: 
@@ -20,8 +16,8 @@ export const Article = ({ articleParam }: IArticleComponent) => {
               <source key={index} srcSet={item.resizedUrl} media={item.option.media} />
             ))} */}
             <img
-              src={defaultUrl}
-              alt={promo_items?.basic.subtitle || "Imagen del artículo"}
+              src={articleParam.imageUrl}
+              alt={articleParam.subtitle || "Imagen del artículo"}
               className="content-img"
             />
           </picture>
@@ -29,12 +25,12 @@ export const Article = ({ articleParam }: IArticleComponent) => {
       </section>
       <div className="mod-caja-nota__descrip">
         <h2 className="com-title-acu">
-          <a href={articleParam.website_url}>
-            <b>{articleParam.headlines.basic}</b>&nbsp;
-            {articleParam.promo_items?.basic.subtitle}
+          <a href={articleParam.websiteUrl}>
+            <b>{articleParam.title}</b>&nbsp;
+            {articleParam.subtitle}
           </a>
         </h2>
-        <h4 className="com-date">{formatDate(articleParam.display_date)}</h4>
+        <h4 className="com-date">{articleParam.date}</h4>
       </div>
     </article>
   );
