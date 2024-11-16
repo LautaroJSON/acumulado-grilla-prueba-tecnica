@@ -74,6 +74,9 @@ const serverConfig = {
   module: babelLoaderServer,
   plugins: [new Dotenv()],
   resolve,
+  externals: {
+    sharp: "commonjs sharp",
+  },
 };
 
 const clientConfig = {
@@ -103,6 +106,9 @@ const clientConfig = {
     minimizer: [`...`, new CssMinimizerPlugin()],
   },
   resolve,
+  externals: {
+    sharp: "commonjs sharp",
+  },
 };
 
 module.exports = [serverConfig, clientConfig];
