@@ -1,4 +1,8 @@
 import { IArticle, INormalizeArticle, ITag } from "../models";
+import sharp from "sharp";
+import fetch from "node-fetch";
+import fs from "fs";
+import path from "path";
 
 function filterArticlesBySubtype(
   articles: Array<IArticle>,
@@ -62,38 +66,64 @@ function normalizeArticlesToFront(articles: IArticle[]) {
   return articles.map(normalizeArticle);
 }
 
-// function extractImageUrls(articles: IArticle[]): string[] {
-//   let imageUrls: string[] = [];
+const downloadConvertAndSaveImage = async (imageUrl: string, filename: string) => {
+  const webpFilePath = path.resolve(__dirname, "../public/images", `${filename}.webp`);
+  const newImageUrl = `/images/${filename}.webp`;
 
-//   articles.forEach((article) => {
-//     if (article.promo_items?.basic?.url) {
-//       imageUrls.push(article.promo_items.basic.url);
-//     }
-//   });
+  if (fs.existsSync(webpFilePath)) {
+    return newImageUrl;
+  }
 
-//   return imageUrls;
-// }
+  const response = await fetch(imageUrl);
+  if (!response.ok) throw new Error("Failed to fetch image");
 
-// async function downloadImages(imageUrls: string[]): Promise<Buffer[]> {
-//   try {
-//     const downloadPromises = imageUrls.map((url) =>
-//       fetch(url)
-//         .then((response) => {
-//           if (!response.ok) {
-//             throw new Error(`Error al descargar la imagen de ${url}`);
-//           }
-//           return response.buffer();
-//         })
-//         .then((buffer) => buffer)
-//     );
+  const stream = sharp().webp({ quality: 80 });
+  const writeStream = fs.createWriteStream(webpFilePath);
+  response.body.pipe(stream).pipe(writeStream);
 
-//     const imageBuffers = await Promise.all(downloadPromises);
+  await new Promise((resolve, reject) => {
+    writeStream.on("finish", resolve);
+    writeStream.on("error", reject);
+  });
 
-//     return imageBuffers;
-//   } catch (error) {
-//     console.error("Error al descargar las imágenes:", error);
-//     return [];
-//   }
-// }
+  return newImageUrl;
+};
 
-export { filterArticlesBySubtype, getGroupsByTag, formatDate, normalizeArticlesToFront };
+const processArticlesAndDownloadImages = async (
+  articles: IArticle[]
+): Promise<IArticle[]> => {
+  const arrayImagesPromises = articles.map(async (article) => {
+    if (article.promo_items?.basic?.url) {
+      try {
+        const localPath = await downloadConvertAndSaveImage(
+          article.promo_items.basic.url,
+          article._id
+        );
+        return {
+          ...article,
+          promo_items: {
+            basic: {
+              ...article.promo_items.basic,
+              url: localPath,
+            },
+          },
+        };
+      } catch (error) {
+        console.error(`Error downloading image for article ${article._id}:`, error);
+      }
+    }
+    return article;
+  });
+
+  const updatedArticles = await Promise.all(arrayImagesPromises);
+
+  return updatedArticles;
+};
+
+export {
+  filterArticlesBySubtype,
+  getGroupsByTag,
+  formatDate,
+  normalizeArticlesToFront,
+  processArticlesAndDownloadImages,
+};

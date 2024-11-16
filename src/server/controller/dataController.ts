@@ -3,13 +3,15 @@ import {
   filterArticlesBySubtype,
   getGroupsByTag,
   normalizeArticlesToFront,
+  processArticlesAndDownloadImages,
 } from "../utils";
 
 const getInitialData = async () => {
   const initialData = await getArticles();
   const filterData = filterArticlesBySubtype(initialData || []);
-  const normalizeData = normalizeArticlesToFront(filterData);
-  console.log("voy a retornar", normalizeData);
+  const imageData = await processArticlesAndDownloadImages(filterData);
+  const normalizeData = normalizeArticlesToFront(imageData);
+
   const tagsBreadcrumbs = getGroupsByTag(filterData);
 
   return { normalizeData, tagsBreadcrumbs };

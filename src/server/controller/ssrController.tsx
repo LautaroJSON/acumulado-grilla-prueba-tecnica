@@ -25,7 +25,6 @@ const reactToHTML = async () => {
 };
 
 export const renderSSR = async (_: Request, res: Response) => {
-  console.log("entre al render");
   const { reactApp, initialData } = await reactToHTML();
   const html = await fs.promises.readFile(path.resolve(__dirname, "index.html"), "utf-8");
 
@@ -38,8 +37,6 @@ export const renderSSR = async (_: Request, res: Response) => {
         breadcrumbs: initialData.tagsBreadcrumbs,
       })};</script></body>`
     );
-
-  console.log("voy a retornar");
 
   res.status(200).send(finalHtml);
 };
