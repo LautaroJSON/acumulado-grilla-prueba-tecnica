@@ -9,8 +9,7 @@ const PORT = process.env.PORT;
 
 const app = express();
 app.use("/static", express.static(path.join(__dirname)));
-app.use("/favicon.ico", express.static(path.join(__dirname, "../public", "favicon.ico")));
-app.use("/images", express.static(path.join(__dirname, "../public/images")));
+app.use(express.static(path.join(__dirname, "../public")));
 
 app.get("*", (req, res) => {
   renderSSR(req, res);
