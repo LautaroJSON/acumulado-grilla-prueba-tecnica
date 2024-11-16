@@ -68,6 +68,8 @@ Aplicacion **Server-Side Rendering (SSR)** con Express, utilizando ReactDOMServe
     ├── public/
     │   ├── favicon.ico
     ├── src/
+    │   ├── __mock__/
+    │   ├── __tests__/
     │   ├── cliente/
     │   │   ├── components/
     │   │   ├── context/
@@ -114,3 +116,4 @@ Aplicacion **Server-Side Rendering (SSR)** con Express, utilizando ReactDOMServe
 - **Babel:** Para transpilar código JavaScript moderno y JSX/TSX a un formato compatible con la mayoría de los navegadores.
 - **Express:** Framework web para Node.js, utilizado para manejar las solicitudes HTTP en el servidor.
 - **Dotenv:** Para manejar variables de entorno (como la URL de la API).
+- **Jest:** Framework de pruebas para unit test
