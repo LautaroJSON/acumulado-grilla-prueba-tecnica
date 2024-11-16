@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 
 function filterArticlesBySubtype(
-  articles: Array<IArticle>,
+  articles?: Array<IArticle>,
   subtype: string = "7"
 ): IArticle[] {
   if (!articles) return [];
@@ -35,6 +35,8 @@ function getGroupsByTag(articles: Array<IArticle>, topTags: number = 10): Array<
 
 function formatDate(dateParam: string): string {
   const date = new Date(dateParam);
+  if (isNaN(date.getTime())) return "Sin fecha";
+
   const day = date.getDate();
   const month = date.toLocaleString("default", { month: "long" });
   const year = date.getFullYear();
