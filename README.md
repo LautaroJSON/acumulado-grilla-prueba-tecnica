@@ -70,6 +70,7 @@ Aplicacion **Server-Side Rendering (SSR)** con Express, utilizando ReactDOMServe
     ├── src/
     │   ├── cliente/
     │   │   ├── components/
+    │   │   ├── context/
     │   │   ├── layout/
     │   │   ├── models/
     │   │   ├── utils/
@@ -78,16 +79,20 @@ Aplicacion **Server-Side Rendering (SSR)** con Express, utilizando ReactDOMServe
     │   │   ├── index.html
     │   │   └── index.tsx
     │   ├── server/
+    │   │   ├── controller/
     │   │   ├── models/
     │   │   ├── services/
     │   │   ├── utils/
-    │   │   └── server.tsx
+    │   │   └── server.ts
     │   ├── global.d.ts
+    ├── .dockerignore
     ├── .env.example <-- nota: reemplazar por .env
     ├── .gitignore
     ├── .prettierignore
     ├── .prettier
     ├── babel.config.json
+    ├── docker-compose.yml
+    ├── Dockerfile
     ├── eslint.config.mjs
     ├── package.json
     ├── README.md
