@@ -114,4 +114,3 @@ Aplicacion **Server-Side Rendering (SSR)** con Express, utilizando ReactDOMServe
 - **Babel:** Para transpilar código JavaScript moderno y JSX/TSX a un formato compatible con la mayoría de los navegadores.
 - **Express:** Framework web para Node.js, utilizado para manejar las solicitudes HTTP en el servidor.
 - **Dotenv:** Para manejar variables de entorno (como la URL de la API).
-- **Vercel:** Plataforma para desplegar aplicaciones serverless y gestionar el ciclo de vida del proyecto.
