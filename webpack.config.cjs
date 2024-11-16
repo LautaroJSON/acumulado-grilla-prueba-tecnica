@@ -11,52 +11,32 @@ const PATHS = {
   src: path.join(__dirname, "/src"),
 };
 
+const RULES = {
+  babelTSX: {
+    test: /\.tsx?$/,
+    exclude: /node_modules/,
+    use: {
+      loader: "babel-loader",
+    },
+  },
+  cssForCliente: {
+    test: /\.css$/,
+    exclude: /node_modules/,
+    use: [MiniCssExtractPlugin.loader, "css-loader"],
+  },
+  cssForServer: {
+    test: /\.css$/,
+    exclude: /node_modules/,
+    use: ["css-loader"],
+  },
+};
+
 const babelLoaderClient = {
-  rules: [
-    {
-      test: /\.tsx?$/,
-      exclude: /node_modules/,
-      use: {
-        loader: "babel-loader",
-        options: {
-          presets: [
-            "@babel/preset-env",
-            ["@babel/preset-react", { runtime: "automatic" }],
-            "@babel/preset-typescript",
-          ],
-        },
-      },
-    },
-    {
-      test: /\.css$/,
-      exclude: /node_modules/,
-      use: [MiniCssExtractPlugin.loader, , "css-loader"],
-    },
-  ],
+  rules: [RULES.babelTSX, RULES.cssForCliente],
 };
 
 const babelLoaderServer = {
-  rules: [
-    {
-      test: /\.tsx?$/,
-      exclude: /node_modules/,
-      use: {
-        loader: "babel-loader",
-        options: {
-          presets: [
-            "@babel/preset-env",
-            ["@babel/preset-react", { runtime: "automatic" }],
-            "@babel/preset-typescript",
-          ],
-        },
-      },
-    },
-    {
-      test: /\.css$/,
-      exclude: /node_modules/,
-      use: ["css-loader"],
-    },
-  ],
+  rules: [RULES.babelTSX, RULES.cssForServer],
 };
 
 const resolve = {
